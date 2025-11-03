@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-indent, @typescript-eslint/indent */
-
 'use client';
 
 import { useSession } from 'next-auth/react';
@@ -13,51 +11,75 @@ const NavBar: React.FC = () => {
   const userWithRole = session?.user as { email: string; randomKey: string };
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
+
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" className="shadow-sm">
       <Container>
         <Navbar.Brand href="/">Next.js Application Template</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto justify-content-start">
-            {currentUser
-              ? [
-                  <Nav.Link id="add-stuff-nav" href="/add" key="add" active={pathName === '/add'}>
-                    Add Stuff
-                  </Nav.Link>,
-                  <Nav.Link id="list-stuff-nav" href="/list" key="list" active={pathName === '/list'}>
-                    List Stuff
-                  </Nav.Link>,
-                ]
-              : ''}
-            {currentUser && role === 'ADMIN' ? (
-              <Nav.Link id="admin-stuff-nav" href="/admin" key="admin" active={pathName === '/admin'}>
-                Admin
-              </Nav.Link>
-            ) : (
-              ''
+          <Nav className="me-auto">
+            {currentUser && (
+              <>
+                <Nav.Link
+                  id="add-stuff-nav"
+                  href="/add"
+                  active={pathName === '/add'}
+                >
+                  Add Stuff
+                </Nav.Link>
+                <Nav.Link
+                  id="list-stuff-nav"
+                  href="/list"
+                  active={pathName === '/list'}
+                >
+                  List Stuff / Contacts
+                </Nav.Link>
+                {role === 'ADMIN' && (
+                  <Nav.Link
+                    id="admin-stuff-nav"
+                    href="/admin"
+                    active={pathName === '/admin'}
+                  >
+                    Admin
+                  </Nav.Link>
+                )}
+              </>
             )}
           </Nav>
+
           <Nav>
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
-                <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
-                  <BoxArrowRight />
+                <NavDropdown.Item
+                  id="login-dropdown-sign-out"
+                  href="/api/auth/signout"
+                >
+                  <BoxArrowRight className="me-2" />
                   Sign Out
                 </NavDropdown.Item>
-                <NavDropdown.Item id="login-dropdown-change-password" href="/auth/change-password">
-                  <Lock />
+                <NavDropdown.Item
+                  id="login-dropdown-change-password"
+                  href="/auth/change-password"
+                >
+                  <Lock className="me-2" />
                   Change Password
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
               <NavDropdown id="login-dropdown" title="Login">
-                <NavDropdown.Item id="login-dropdown-sign-in" href="/auth/signin">
-                  <PersonFill />
+                <NavDropdown.Item
+                  id="login-dropdown-sign-in"
+                  href="/auth/signin"
+                >
+                  <PersonFill className="me-2" />
                   Sign in
                 </NavDropdown.Item>
-                <NavDropdown.Item id="login-dropdown-sign-up" href="/auth/signup">
-                  <PersonPlusFill />
+                <NavDropdown.Item
+                  id="login-dropdown-sign-up"
+                  href="/auth/signup"
+                >
+                  <PersonPlusFill className="me-2" />
                   Sign up
                 </NavDropdown.Item>
               </NavDropdown>
